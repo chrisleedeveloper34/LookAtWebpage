@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WebpageKeywordChecker.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UrlToCheck" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://uk.webuy.com/product.php?sku=0454965218NS</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
