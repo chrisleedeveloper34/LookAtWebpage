@@ -16,27 +16,44 @@ namespace WebpageKeywordChecker
 
         }
 
-        public static string GetWebpage(string url) {
+        public static string GetWebpage(string url)
+        {
             string webpageData = String.Empty;
+            HttpWebRequest req = null;
+            HttpWebResponse res = null;
 
-            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
-            HttpWebResponse res = req.GetResponse() as HttpWebResponse;
-
-            if (res.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Stream received = res.GetResponseStream();
-                StreamReader readStream = null;
-
-                if(res.CharacterSet == null)
+                req = WebRequest.Create(url) as HttpWebRequest;
+                res = req.GetResponse() as HttpWebResponse;
+                if (res.StatusCode == HttpStatusCode.OK)
                 {
-                    readStream = new StreamReader(received);
-                }
-                else
-                {
-                    readStream = new StreamReader(received, Encoding.GetEncoding(res.CharacterSet));
-                }
+                    Stream received = res.GetResponseStream();
+                    StreamReader readStream = null;
 
-                webpageData = readStream.ReadToEnd();
+                    if (res.CharacterSet == null)
+                    {
+                        readStream = new StreamReader(received);
+                    }
+                    else
+                    {
+                        readStream = new StreamReader(received, Encoding.GetEncoding(res.CharacterSet));
+                    }
+
+                    webpageData = readStream.ReadToEnd();
+                }
+            }
+            catch (WebException webex)
+            {
+                // log this exception
+            }
+                catch (Exception ex)
+            {
+                    // log this exception
+            }
+            finally
+            {
+
             }
 
             return webpageData;
