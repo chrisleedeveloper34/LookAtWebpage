@@ -49,5 +49,32 @@ namespace WebpageKeywordChecker.Properties {
                 return ((string)(this["LogFolder"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("found@gmail.com")]
+        public string FromEmail {
+            get {
+                return ((string)(this["FromEmail"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("captain.dogendo@gmail.com")]
+        public string ToEmail {
+            get {
+                return ((string)(this["ToEmail"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("something")]
+        public string GmailPassword {
+            get {
+                return ((string)(this["GmailPassword"]));
+            }
+        }
     }
 }

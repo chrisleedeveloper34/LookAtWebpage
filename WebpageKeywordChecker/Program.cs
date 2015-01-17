@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Net;
+using System.Net.Mail;
 
 namespace WebpageKeywordChecker
 {
@@ -15,11 +17,6 @@ namespace WebpageKeywordChecker
         {
             logger = new Logger();
             Console.WriteLine(logger.Location);
-            string url = Properties.Settings.Default.UrlToCheck;
-            string find = Properties.Settings.Default.TextToFind;
-            string webpageData = GetWebpage(url);
-            bool found = webpageData.Contains(find);
-            Console.WriteLine(found.ToString());
             Console.ReadLine();
         }
 
@@ -49,17 +46,16 @@ namespace WebpageKeywordChecker
 
                     webpageData = readStream.ReadToEnd();
                 }
-
-                throw new Exception("Testing");
             }
             catch (WebException webex)
             {
                 // log this exception
+                logger.WriteToLog(webex.ToString());
             }
             catch (Exception ex)
             {
                 // log this exception
-                logger.WriteToLog(ex.Message);
+                logger.WriteToLog(ex.ToString());
             }
             finally
             {
@@ -69,9 +65,48 @@ namespace WebpageKeywordChecker
             return webpageData;
         }
 
-        public static void WriteToFile()
+        public void Find()
         {
+            string url = Properties.Settings.Default.UrlToCheck;
+            string find = Properties.Settings.Default.TextToFind;
+            string webpageData = GetWebpage(url);
+            bool found = webpageData.Contains(find);
+            //Console.WriteLine(found.ToString());
+            if (found)
+            {
+                // send an email
 
+            }
+        }
+
+        public void SendEmail()
+        {
+            string from = Properties.Settings.Default.FromEmail;
+            string to = Properties.Settings.Default.ToEmail;
+
+            var fromAddress = new MailAddress(from, "Found");
+            var toAddress = new MailAddress(to, "Chris");
+            string fromPassword = Properties.Settings.Default.GmailPassword;
+            const string subject = "Found";
+            string body = String.Format("Found your thing at {0}", Properties.Settings.Default.UrlToCheck);
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
         }
     }
 }
