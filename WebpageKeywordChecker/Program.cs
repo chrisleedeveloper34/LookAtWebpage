@@ -16,6 +16,7 @@ namespace WebpageKeywordChecker
         static void Main(string[] args)
         {
             logger = new Logger();
+            logger.WriteToLog("Program start");
             //Console.WriteLine(logger.Location);
             Find();
             //Console.ReadLine();
@@ -70,11 +71,13 @@ namespace WebpageKeywordChecker
         {
             string url = Properties.Settings.Default.UrlToCheck;
             string find = Properties.Settings.Default.TextToFind;
+            logger.WriteToLog("Get web page " + url);
             string webpageData = GetWebpage(url);
             bool found = webpageData.Contains(find);
             //Console.WriteLine(found.ToString());
             if (found)
             {
+                logger.WriteToLog("Found!");
                 // send an email
                 SendEmail();
             }
@@ -103,6 +106,7 @@ namespace WebpageKeywordChecker
             try
             {
                 smtpClient.Send(mailMessage);
+                logger.WriteToLog("Email sent!");
             }
             catch (Exception ex)
             {
