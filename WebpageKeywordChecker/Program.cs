@@ -16,9 +16,9 @@ namespace WebpageKeywordChecker
         static void Main(string[] args)
         {
             logger = new Logger();
-            Console.WriteLine(logger.Location);
+            //Console.WriteLine(logger.Location);
             Find();
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         public static string GetWebpage(string url)
@@ -73,7 +73,7 @@ namespace WebpageKeywordChecker
             string webpageData = GetWebpage(url);
             bool found = webpageData.Contains(find);
             //Console.WriteLine(found.ToString());
-            if (true)
+            if (found)
             {
                 // send an email
                 SendEmail();
