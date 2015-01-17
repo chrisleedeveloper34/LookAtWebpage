@@ -12,13 +12,13 @@
       <Value Profile="(Default)">C:\Temp\Logs</Value>
     </Setting>
     <Setting Name="FromEmail" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">found@gmail.com</Value>
+      <Value Profile="(Default)">captain_dogendo@hotmail.com</Value>
     </Setting>
     <Setting Name="ToEmail" Type="System.String" Scope="Application">
       <Value Profile="(Default)">captain.dogendo@gmail.com</Value>
     </Setting>
-    <Setting Name="GmailPassword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">something</Value>
+    <Setting Name="EmailPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

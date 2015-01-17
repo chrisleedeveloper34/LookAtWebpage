@@ -52,7 +52,7 @@ namespace WebpageKeywordChecker.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("found@gmail.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("captain_dogendo@hotmail.com")]
         public string FromEmail {
             get {
                 return ((string)(this["FromEmail"]));
@@ -70,10 +70,10 @@ namespace WebpageKeywordChecker.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("something")]
-        public string GmailPassword {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EmailPassword {
             get {
-                return ((string)(this["GmailPassword"]));
+                return ((string)(this["EmailPassword"]));
             }
         }
     }

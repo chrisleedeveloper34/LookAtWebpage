@@ -17,6 +17,7 @@ namespace WebpageKeywordChecker
         {
             logger = new Logger();
             Console.WriteLine(logger.Location);
+            Find();
             Console.ReadLine();
         }
 
@@ -65,48 +66,53 @@ namespace WebpageKeywordChecker
             return webpageData;
         }
 
-        public void Find()
+        public static void Find()
         {
             string url = Properties.Settings.Default.UrlToCheck;
             string find = Properties.Settings.Default.TextToFind;
             string webpageData = GetWebpage(url);
             bool found = webpageData.Contains(find);
             //Console.WriteLine(found.ToString());
-            if (found)
+            if (true)
             {
                 // send an email
-
+                SendEmail();
             }
         }
 
-        public void SendEmail()
+        public static void SendEmail()
         {
             string from = Properties.Settings.Default.FromEmail;
             string to = Properties.Settings.Default.ToEmail;
 
             var fromAddress = new MailAddress(from, "Found");
             var toAddress = new MailAddress(to, "Chris");
-            string fromPassword = Properties.Settings.Default.GmailPassword;
-            const string subject = "Found";
+            string fromPassword = Properties.Settings.Default.EmailPassword;
+            const string subject = "Found your item";
             string body = String.Format("Found your thing at {0}", Properties.Settings.Default.UrlToCheck);
 
-            var smtp = new SmtpClient
+            var smtpClient = new SmtpClient();
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(from, "");
+            smtpClient.Host = "smtp.live.com";
+            smtpClient.Port = 587;
+            smtpClient.EnableSsl = true;
+            smtpClient.SendCompleted += SmtpClientSendCompleted;
+            var mailMessage = new MailMessage(from, to, subject, body);
+
+            try
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(message);
+                smtpClient.Send(mailMessage);
             }
+            catch (Exception ex)
+            {
+                logger.WriteToLog(ex.ToString());
+            }
+        }
+
+        private static void SmtpClientSendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            logger.WriteToLog("Email sent!");
         }
     }
 }
