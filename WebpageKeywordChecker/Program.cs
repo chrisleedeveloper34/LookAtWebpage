@@ -7,13 +7,20 @@ using System.Text;
 
 namespace WebpageKeywordChecker
 {
-    class Program
+    public class Program
     {
+        static Logger logger = null;
+
         static void Main(string[] args)
         {
+            logger = new Logger();
+            Console.WriteLine(logger.Location);
             string url = Properties.Settings.Default.UrlToCheck;
+            string find = Properties.Settings.Default.TextToFind;
             string webpageData = GetWebpage(url);
-
+            bool found = webpageData.Contains(find);
+            Console.WriteLine(found.ToString());
+            Console.ReadLine();
         }
 
         public static string GetWebpage(string url)
@@ -42,14 +49,17 @@ namespace WebpageKeywordChecker
 
                     webpageData = readStream.ReadToEnd();
                 }
+
+                throw new Exception("Testing");
             }
             catch (WebException webex)
             {
                 // log this exception
             }
-                catch (Exception ex)
+            catch (Exception ex)
             {
-                    // log this exception
+                // log this exception
+                logger.WriteToLog(ex.Message);
             }
             finally
             {
