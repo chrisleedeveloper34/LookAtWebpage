@@ -27,9 +27,9 @@ namespace WebpageKeywordChecker
 
         public void WriteToLog(string txt)
         {
-            using (FileStream fs = File.Open(logPath, FileMode.Open))
+            using (FileStream fs = File.Open(logPath, FileMode.Append))
             {
-                Byte[] info = new UTF8Encoding(true).GetBytes(txt);
+                Byte[] info = new UTF8Encoding(true).GetBytes(String.Format("{0}{1}", txt, Environment.NewLine));
                 fs.Write(info, 0, info.Length);
             }
         }

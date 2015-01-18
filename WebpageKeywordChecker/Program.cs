@@ -77,22 +77,26 @@ namespace WebpageKeywordChecker
             //Console.WriteLine(found.ToString());
             if (found)
             {
-                logger.WriteToLog("Found!");
+                string foundMsg = String.Format("Found your item at {0}", url);
+                logger.WriteToLog(foundMsg);
                 // send an email
-                SendEmail();
+                SendEmail("Found", foundMsg);
+            }
+            else
+            {
+                string foundMsg = String.Format("Didn't find your item at {0}", url);
+                SendEmail("Not found", foundMsg);
             }
         }
 
-        public static void SendEmail()
+        public static void SendEmail(string subject, string body)
         {
             string from = Properties.Settings.Default.FromEmail;
             string to = Properties.Settings.Default.ToEmail;
 
-            var fromAddress = new MailAddress(from, "Found");
+            var fromAddress = new MailAddress(from, "Finder service");
             var toAddress = new MailAddress(to, "Chris");
             string fromPassword = Properties.Settings.Default.EmailPassword;
-            const string subject = "Found your item";
-            string body = String.Format("Found your thing at {0}", Properties.Settings.Default.UrlToCheck);
 
             var smtpClient = new SmtpClient();
             smtpClient.UseDefaultCredentials = false;
